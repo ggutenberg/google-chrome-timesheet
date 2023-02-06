@@ -2,6 +2,14 @@ let timesheet = [];
 let startOfWeek;
 let storageKey;
 
+const importModule = function ( file ) {
+    const script = document.createElement('script');
+    script.setAttribute('type', 'module');
+    script.setAttribute('src', chrome.runtime.getURL( file ));
+    const head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
+    head.insertBefore( script, head.lastChild );
+}
+
 const getCookie = function( name ) {
     const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return v ? v[2] : null;
@@ -12,6 +20,30 @@ const setCookie = function( name, value, days ) {
     d.setTime( d.getTime() + 24 * 60 * 60 * 1000 * days );
     document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
 };
+
+const markupCleanup = function () {
+    // get Content Div
+    const contentDiv  = document.getElementById("buc-content");
+    const maintime    = contentDiv.querySelector('.employee-schedule-overview');
+    const empRefresh  = document.querySelector('.employee-refresh');
+
+    let mappingButton = document.createElement("a");
+    mappingButton.setAttribute( 'ID', 'mapping');
+    mappingButton.innerHTML = 'Manually Map';
+
+    // create content container/wrapper
+    let infoContainer = document.createElement("div"); 
+    infoContainer.className = 'employee-info-container'; 
+    
+    // add to the content div
+    contentDiv.insertAdjacentElement( 'beforeend', infoContainer ); 
+
+    infoContainer.appendChild( maintime );
+    empRefresh.insertAdjacentElement( 'beforeend', mappingButton );
+
+    //infoContainer.appendChild( sidebarContainer );
+//    sidebarContainer.appendChild( sidebar );
+}
 
 const parseTimesheet = function( timeEntries, startDate ) {
     startOfWeek = startDate;
@@ -26,7 +58,10 @@ const parseTimesheet = function( timeEntries, startDate ) {
     } else {
         timesheet = timeEntries;
     }
+    
     console.log( timesheet );
+    window.timesheet = timesheet; 
+
     setCookie( 'mapping-' + startOfWeek, JSON.stringify( timesheet ), 365 );
     storageKey = 'mapping-' + startOfWeek;
     let totalHoursLogged = 0;
@@ -41,7 +76,8 @@ const parseTimesheet = function( timeEntries, startDate ) {
 
         resourcing.forEach( function( el, index )  {
             if ( 0 === index ) {
-                el.insertAdjacentHTML( 'beforeend', '<div class="employee-cell employee-client-hours-logged" style="position: relative;">Hours logged<a href="#" id="mapping">mapping</a></div>' );
+                // add the hours logged column.
+                el.insertAdjacentHTML( 'beforeend', '<div class="employee-cell employee-client-hours-logged" style="position: relative;">Hours logged</div>' );
                 document.getElementById( 'mapping' ).addEventListener( 'click', mapEntries );
             } else {
                 // see if we can find the project.
@@ -164,6 +200,11 @@ const init = function() {
     let startOfWeek;
     const url = new URL( document.location.href );
     const arg = url.searchParams.get( 'week' );
+
+    importModule( 'assets/js/remaining.js' );
+
+    markupCleanup();
+
     if ( arg ) {
         startOfWeek = arg;
     } else {
@@ -192,7 +233,7 @@ const cleanName = function( name ) {
     n = n.replace( /\s\s+/g, ' ');
     let m;
     let output = '';
-    const regex = /\b\w{4,}/g;
+    const regex = /\b\w{3,}/g;
 
     while ( ( m = regex.exec( n ) ) !== null ) {
         // This is necessary to avoid infinite loops with zero-width matches

@@ -1,0 +1,153 @@
+@media screen and (min-width: 800px) {
+    .employee-info-container__sidebar .employee-performance-overview {
+        width: 100%
+    }
+
+    .employee-info-container__sidebar {
+        max-width: 30%;
+    }
+
+
+    svg.employee-performance-chart {
+        display: none;
+    }
+}
+
+.employee-performance-overview {
+    border: 0;
+}
+
+.employee-schedule-overview {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#mapping_content {
+    padding: 2rem;
+    color: #fff;
+    background: #303030;
+    position:absolute;
+    top: 50px;
+    right: 50px;
+    width: 430px;
+    height: auto;
+    z-index: 99999;
+    overflow: auto;
+}
+
+#mapping_content div {
+    margin-bottom: 1rem;
+}
+
+#mapping_content label {
+    display: block;
+}
+
+#mapping_content select {
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+#mapping_content input[type="button"] {
+    color: black;
+}
+
+#mapping_content select,
+#mapping_content input[type="submit"] {
+    color: black;
+}
+
+a#mapping,
+.employee-nav-toolbar .employee-refresh button.reload-dashboard-data {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    color: #000;
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-top: 10px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+a#mapping:hover {
+    background-color: #dedede;
+    color: #384ca5;
+}
+
+.employee-avatar-container .employee-avatar {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 1px 1px 3px #bbb;
+}
+
+@media screen and (min-width: 800px) {
+    .nav-toolbar.employee-nav-toolbar {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+}
+
+#buc-content .nav-toolbar {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+}
+
+.yellow-cell {
+    background-color: #fffbd9;
+}
+
+.red-cell {
+    background-color: #ffd6d3;
+}
+
+.green-cell {
+    background-color: #a8f6a740;
+}
+
+.group-toggle {
+    display: flex;
+}
+
+.employee-nav-toolbar .group-toggle button.button-week {
+    border: 0;
+    margin-left: .5rem;
+    order: 3;
+}
+
+.employee-nav-toolbar .group-toggle .button-previous {
+    margin-right: .5rem;
+}
+
+.group-toggle .date-nav-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: black;
+}
+
+.employee-nav-toolbar .group-toggle .date-nav-button:hover {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+
+.employee-schedule-overview .employee-schedule-row-header {
+    background-color: transparent;
+    border-bottom: 1px solid #ccc;
+    color: black;
+    font-weight: 600;
+}
+
+.employee-info-container .employee-schedule-row-total {
+    background-color: transparent;  
+}
+
+#buc-content .employee-performance-overview {
+    background-color: transparent;
+    border: 0;
+}
+
+.employee-performance-overview h2 {
+    display: none;
+}
