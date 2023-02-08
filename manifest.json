@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Timesheet Concept",
   "version": "1.0.2",
   "icons": {
@@ -16,15 +16,21 @@
       "matches": [
         "https://dashboard.10up.com/blog/10upper/*"
       ],
-      "js": ["moment.min.js","content.js"],
-      "css": ["content.css"]
+      "js": ["assets/js/dist/moment.min.js","assets/js/content.js" ],
+      "css": ["assets/css/content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "assets/js/*" ],
+      "matches": ["<all_urls>"]
     }
   ],
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
   },
-  "browser_action": {
+  "action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
@@ -32,6 +38,9 @@
     "activeTab",
     "storage",
     "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
     "https://api.harvestapp.com/*"
   ]
 }
