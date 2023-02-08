@@ -165,7 +165,6 @@ const mapEntries = function( e ) {
                 const project_name = project.innerHTML.replace( '&amp;', '&' );
                 output += '<div><label>' + project_name + ':</label><select name="project[' + project_name + '][]" multiple size="5">';
                 timesheet.forEach( function( p ) {
-					output += '<optgroup label="' + p.project.replace( '&amp;', '&' ) + '">';
                     output += '<option value="' + `cpt${p.client_id}-${p.project_id}-${p.task_id}` + '"';
                     // check mapping.
                     if ( items[storageKey]['project[' + project_name + '][]'] ) {
@@ -181,7 +180,7 @@ const mapEntries = function( e ) {
                             }
                         }
                     }
-					output += '>' + p.task.replace( '&amp;', '&' ) + '</option>';
+					output += '>' + p.project.replace( '&amp;', '&' ) + '</option>';
 					output += '</optgroup>';
                 } );
                 output += '</select></div><br>';
