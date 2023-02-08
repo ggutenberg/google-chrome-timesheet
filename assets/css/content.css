@@ -57,22 +57,31 @@
     color: black;
 }
 
+.employee-nav-toolbar a:first-of-type {
+    margin-right: 0;
+}
+
 a#mapping,
-.employee-nav-toolbar .employee-refresh button.reload-dashboard-data {
+.employee-nav-toolbar .employee-refresh button.reload-dashboard-data,
+.refresh-stats {
     background-color: #f0f0f0;
+    border: 0;
     border-radius: 4px;
     color: #000;
     cursor: pointer;
     margin-left: 1rem;
+    margin-right: 0;
     margin-top: 10px;
     padding: 10px 10px;
     text-align: center;
     text-decoration: none;
 }
 
-a#mapping:hover {
+a#mapping:hover,
+.employee-nav-toolbar button.reload-dashboard-data:hover,
+.refresh-stats:hover {
     background-color: #dedede;
-    color: #384ca5;
+    color: #000;
 }
 
 .employee-avatar-container .employee-avatar {
@@ -94,15 +103,15 @@ a#mapping:hover {
 }
 
 .yellow-cell {
-    background-color: #fffbd9;
+    background-color: #ffffce;
 }
 
 .red-cell {
-    background-color: #ffd6d3;
+    background-color: #ffa1a1;
 }
 
 .green-cell {
-    background-color: #a8f6a740;
+    background-color: #d7f9d7;
 }
 
 .group-toggle {
@@ -131,6 +140,9 @@ a#mapping:hover {
     color: black;
 }
 
+.employee-schedule-row:hover {
+    background-color: #f0f0f0;
+}
 
 .employee-schedule-overview .employee-schedule-row-header {
     background-color: transparent;
