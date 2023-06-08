@@ -1,8 +1,9 @@
 # Check 10up resourcing against time logged
 This is a concept tool to check 10up resourcing and time logged in Harvest
 
-## ~~Installation from Chrome Web Store [skip Manual installation if using this step]: ##
-https://chrome.google.com/webstore/detail/timesheet-extension/hhelbiolpfjfepihdklgojjhpkgbmfjp?hl=en-US~~
+## ~~Installation from Chrome Web Store [skip Manual installation if using this step]:~~ ##
+~~https://chrome.google.com/webstore/detail/timesheet-extension/hhelbiolpfjfepihdklgojjhpkgbmfjp?hl=en-US~~
+
 (not applicable for this fork)
 
 - - - - 
