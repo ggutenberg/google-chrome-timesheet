@@ -323,43 +323,12 @@ const checkDashboard = function( checkTimesheet ) {
     }
 };
 
-const cleanName = function( name ) {
-    if ( !name ) {
-        return '';
-    }
-
-    let n = name.replace( /[^A-Za-z\s\-]/g, ' ' );
-    n = n.replace( /\-/g, ' ' );
-    n = n.replace( /\s\s+/g, ' ');
-    let m;
-    let output = '';
-    const regex = /\b\w{3,}/g;
-
-    while ( ( m = regex.exec( n ) ) !== null ) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (m.index === regex.lastIndex) {
-            regex.lastIndex++;
-        }
-
-        // The result can be accessed through the `m`-variable.
-        m.forEach( ( match, groupIndex) => {
-            output += ' ' + match;
-        } );
-    }
-
-    output = output.replace( /\s+/g, '' ).toLowerCase();
-
-    return output;
-};
-
 const compareNames = function( original, logged ) {
-  original = cleanName( original );
-  logged   = cleanName( logged );
 
   // hardcoded the company time.
-  if ( 'overhead' === original &&
-     'companytimeplanningbrainstorming' === logged ) {
-      return true;
+  if ( original.toLowerCase().startsWith('overhead') && 
+      ( logged.toLowerCase().startsWith('overhead') || 'non-billable company time' === logged.toLowerCase() ) ) {
+    return true;
   }
 
   if ( original === logged ) {
