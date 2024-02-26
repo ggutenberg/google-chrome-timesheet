@@ -52,11 +52,11 @@ const markupCleanup = function () {
     refreshStatsButton.setAttribute( 'value', 'Refresh Stats');
 
     // create content container/wrapper
-    let infoContainer = document.createElement("div"); 
-    infoContainer.className = 'employee-info-container'; 
-    
+    let infoContainer = document.createElement("div");
+    infoContainer.className = 'employee-info-container';
+
     // add to the content div
-    contentDiv.insertAdjacentElement( 'beforeend', infoContainer ); 
+    contentDiv.insertAdjacentElement( 'beforeend', infoContainer );
 
     infoContainer.appendChild( maintime );
     empRefresh.insertAdjacentElement( 'beforeend', mappingButton );
@@ -83,7 +83,7 @@ const parseTimesheet = function( timeEntries, startDate ) {
         timesheet = timeEntries;
     }
 
-    window.timesheet = timesheet; 
+    window.timesheet = timesheet;
 
     setCookie( 'mapping-' + startOfWeek, JSON.stringify( timesheet ), 365 );
     storageKey = 'mapping-' + startOfWeek;
@@ -107,22 +107,22 @@ const parseTimesheet = function( timeEntries, startDate ) {
                 const project = el.querySelector( '.employee-client-project,.employee-schedule-total-label' );
                 let hours_logged = 0;
                 if ( project && 'Total' !== project.innerHTML ) {
-                    const project_name = project.innerHTML;
+                    const project_name = cleanName(project.innerHTML);
                     timesheet.forEach( function( p ) {
                         if ( compareNames( project_name, p.project ) ) {
                             hours_logged = p.hours;
                         } else {
                             // check mapping.
                             const current_project = p;
-                            if ( items[storageKey]['project[' + project_name.replace( '&amp;', '&' ) + '][]'] ) {
-                                if ( Array.isArray( items[storageKey]['project[' + project_name.replace( '&amp;', '&' ) + '][]'] ) ) {
-                                    items[storageKey]['project[' + project_name.replace( '&amp;', '&' ) + '][]'].forEach( function( map_item ) {
+                            if ( items[storageKey]['project[' + project_name + '][]'] ) {
+                                if ( Array.isArray( items[storageKey]['project[' + project_name + '][]'] ) ) {
+                                    items[storageKey]['project[' + project_name + '][]'].forEach( function( map_item ) {
                                         if ( map_item === `cpt${current_project.client_id}-${current_project.project_id}-${current_project.task_id}` ) {
                                             hours_logged = hours_logged + parseFloat( current_project.hours );
                                         }
                                     } );
                                 } else {
-                                    if( items[storageKey]['project[' + project_name.replace( '&amp;', '&' ) + '][]'] === `cpt${current_project.client_id}-${current_project.project_id}-${current_project.task_id}` ) {
+                                    if( items[storageKey]['project[' + project_name + '][]'] === `cpt${current_project.client_id}-${current_project.project_id}-${current_project.task_id}` ) {
                                         hours_logged = hours_logged + parseFloat( current_project.hours );
                                     }
                                 }
@@ -162,8 +162,8 @@ const mapEntries = function( e ) {
             // see if we can find the project.
             const project = 'Total' !== el.innerHTML ? el : false;
             if ( project ) {
-                const project_name = project.innerHTML.replace( '&amp;', '&' );
-                output += '<div><label>' + project_name + ':</label><select name="project[' + project_name + '][]" multiple size="5">';
+                const project_name = cleanName(project.innerHTML);
+                output += '<div><label>' + project.innerHTML + ':</label><select name="project[' + project_name + '][]" multiple size="5">';
                 timesheet.forEach( function( p ) {
                     output += '<option value="' + `cpt${p.client_id}-${p.project_id}-${p.task_id}` + '"';
                     // check mapping.
@@ -323,12 +323,19 @@ const checkDashboard = function( checkTimesheet ) {
     }
 };
 
+const decodeHTML = function( encodedString ) {
+    var txt = document.createElement('textarea');
+    txt.innerHTML = encodedString;
+    return txt.value;
+};
+
 const cleanName = function( name ) {
     if ( !name ) {
         return '';
     }
 
-    let n = name.replace( /[^A-Za-z\s\-]/g, ' ' );
+    let n = decodeHTML(name);
+    n = n.replace( /[^A-Za-z0-9\s\-]/g, ' ' );
     n = n.replace( /\-/g, ' ' );
     n = n.replace( /\s\s+/g, ' ');
     let m;
