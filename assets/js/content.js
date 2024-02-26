@@ -360,13 +360,11 @@ const cleanName = function( name ) {
 };
 
 const compareNames = function( original, logged ) {
-  original = cleanName( original );
-  logged   = cleanName( logged );
 
   // hardcoded the company time.
-  if ( 'overhead' === original &&
-     'companytimeplanningbrainstorming' === logged ) {
-      return true;
+  if ( original.toLowerCase().startsWith('overhead') && 
+      ( logged.toLowerCase().startsWith('overhead') || 'non-billable company time' === logged.toLowerCase() ) ) {
+    return true;
   }
 
   if ( original === logged ) {
